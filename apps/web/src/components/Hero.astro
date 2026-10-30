@@ -1,0 +1,101 @@
+---
+import ChatDemo from './ChatDemo.astro';
+---
+
+<section class="hero">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="eyebrow">Para tiendas de barrio en Colombia</p>
+      <h1>Tu inventario cabe en un <span class="tag">WhatsApp</span>.</h1>
+      <p class="lede">
+        Vende y registra productos con una foto, un audio o un mensaje. Fácil Pago descuenta el stock, guarda el
+        pantallazo de Nequi o Bre-B y te entrega el comprobante en el mismo chat.
+      </p>
+      <div class="actions">
+        <a href="#piloto" class="btn btn-primary">Quiero ser tienda piloto</a>
+        <a href="#como-funciona" class="btn btn-ghost">Ver cómo funciona</a>
+      </div>
+      <ul class="without" aria-label="Lo que ya no necesitas">
+        <li><s>Lector de código de barras</s></li>
+        <li><s>Computador en el mostrador</s></li>
+        <li><s>Cuaderno de ventas</s></li>
+      </ul>
+    </div>
+    <div class="demo">
+      <ChatDemo />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 2rem + 4vw, 5.5rem) clamp(3.5rem, 3rem + 4vw, 6rem);
+    overflow: hidden;
+  }
+  .grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  .copy {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+  h1 {
+    font-size: var(--step-4);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    font-variation-settings: 'wdth' 90;
+  }
+  h1 .tag {
+    padding-inline: 0.12em;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .without {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+  }
+  .without s {
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--bad);
+  }
+  .demo {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  /* Cartel amarillo detrás del teléfono */
+  .demo::before {
+    content: '';
+    position: absolute;
+    inset: 10% max(0px, calc(50% - 14.5rem)) 2% 30%;
+    background: var(--tag);
+    border-radius: 1.5rem;
+    transform: rotate(6deg);
+    z-index: -1;
+    opacity: 0.9;
+  }
+  .demo {
+    isolation: isolate;
+  }
+
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+    }
+  }
+</style>

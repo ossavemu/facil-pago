@@ -1,0 +1,149 @@
+---
+const lines = [
+  {
+    kind: 'Inventario',
+    number: '+57 300 ··· 12 01',
+    who: 'Dueño y empleados de bodega',
+    does: ['Registrar y corregir productos', 'Entradas de mercancía', 'Ajustes y mermas con motivo', 'Consultar stock'],
+  },
+  {
+    kind: 'Ventas',
+    number: '+57 300 ··· 12 02',
+    who: 'Dueño y vendedores de mostrador',
+    does: ['Registrar ventas', 'Medio de pago', 'Adjuntar el soporte', 'Reenviar comprobantes'],
+  },
+];
+---
+
+<section class="section lines">
+  <div class="wrap grid">
+    <div class="section-head">
+      <p class="eyebrow">Dos líneas por tienda</p>
+      <h2>Un número para lo que entra. Otro para lo que sale.</h2>
+      <p class="lede">
+        Separar las líneas evita confusiones en el mostrador. Cada persona de tu equipo queda registrada por su número y
+        solo puede hacer lo que su rol le permite.
+      </p>
+      <p class="note">
+        Quien vende no ve tus costos. Anular una venta o cambiar un precio solo lo puede hacer el dueño.
+      </p>
+    </div>
+
+    <div class="cards">
+      {
+        lines.map((l) => (
+          <article class="card">
+            <header>
+              <span class="kind">{l.kind}</span>
+              <span class="number num">{l.number}</span>
+            </header>
+            <p class="who">{l.who}</p>
+            <ul>
+              {l.does.map((d) => (
+                <li>{d}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .lines {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .lines .eyebrow {
+    color: color-mix(in oklab, var(--paper) 60%, var(--ink));
+  }
+  .lines .lede {
+    color: color-mix(in oklab, var(--paper) 82%, var(--ink));
+  }
+  .note {
+    padding-left: 1rem;
+    border-left: 3px solid var(--tag);
+    color: color-mix(in oklab, var(--paper) 82%, var(--ink));
+    max-width: 34rem;
+  }
+  .grid {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+  }
+  .grid .section-head {
+    margin-bottom: 1.5rem;
+  }
+  .cards {
+    display: grid;
+    gap: 1rem;
+  }
+  .card {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: color-mix(in oklab, var(--paper) 7%, var(--ink));
+    border: 1px solid color-mix(in oklab, var(--paper) 16%, var(--ink));
+  }
+  .card header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .kind {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--step-2);
+    letter-spacing: -0.02em;
+  }
+  .number {
+    font-size: var(--step--1);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--tag);
+    color: var(--tag-ink);
+  }
+  .who {
+    color: color-mix(in oklab, var(--paper) 70%, var(--ink));
+    font-size: var(--step--1);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+  li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+  li::before {
+    content: '';
+    flex: none;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--tag);
+    transform: translateY(-0.1em);
+  }
+  @media (min-width: 40rem) {
+    .cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 64rem) {
+    .grid {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4rem;
+    }
+    .grid .section-head {
+      margin-bottom: 0;
+    }
+  }
+</style>

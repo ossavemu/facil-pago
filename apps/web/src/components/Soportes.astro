@@ -1,0 +1,190 @@
+---
+const checks = [
+  { title: 'Lee el monto y la referencia', body: 'Del pantallazo de Nequi, Bre-B, Daviplata o tu banco.' },
+  { title: 'Lo compara con el total', body: 'Si el pago no cuadra con la venta, te avisa antes de guardarlo.' },
+  { title: 'Detecta soportes repetidos', body: 'El mismo pantallazo no puede respaldar dos ventas distintas.' },
+  { title: 'Marca las ventas sin soporte', body: 'Las ves en el portal para pedirlo después.' },
+];
+---
+
+<section class="section soportes" id="soportes">
+  <div class="wrap grid">
+    <div class="copy">
+      <div class="section-head">
+        <p class="eyebrow">Soportes de pago y comprobantes</p>
+        <h2>Cada venta con su pantallazo al lado.</h2>
+        <p class="lede">
+          Se acabó buscar en la galería quién pagó qué. El soporte queda pegado a la venta y el cliente recibe un comprobante
+          numerado.
+        </p>
+      </div>
+      <ul class="checks">
+        {
+          checks.map((c) => (
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="m5 12.5 4.5 4.5L19 7.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="fine">
+        El soporte es evidencia del pago, no una conciliación bancaria: Fácil Pago no confirma que el dinero haya llegado a tu
+        cuenta.
+      </p>
+    </div>
+
+    <div class="ticket-wrap" id="comprobante">
+      <div class="ticket num" role="img" aria-label="Ejemplo de comprobante simple V-000184 por $18.700">
+        <p class="center strong">TIENDA DOÑA ROSA</p>
+        <p class="center">Cra. 45 # 12-30 · Bello, Antioquia</p>
+        <hr />
+        <p class="row"><span>COMPROBANTE</span><span class="strong">V-000184</span></p>
+        <p class="row"><span>29/10/2026</span><span>10:42 a. m.</span></p>
+        <p class="row"><span>Atendió</span><span>Camilo</span></p>
+        <hr />
+        <p class="row"><span>2 Coca-Cola 400 ml</span><span>6.000</span></p>
+        <p class="row"><span>1 Pan tajado Bimbo</span><span>7.900</span></p>
+        <p class="row"><span>1 Leche Alquería 1,1 L</span><span>4.800</span></p>
+        <hr />
+        <p class="row total"><span>TOTAL</span><span>$18.700</span></p>
+        <p class="row"><span>Pago</span><span>Nequi</span></p>
+        <p class="row"><span>Ref.</span><span>M48210937</span></p>
+        <p class="row"><span>Soporte</span><span class="okmark">Adjunto ✓</span></p>
+        <hr />
+        <p class="center legal">Este documento no es una factura electrónica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 3.5rem;
+    align-items: start;
+  }
+  .copy {
+    min-width: 0;
+  }
+  .checks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.4rem;
+  }
+  @media (min-width: 40rem) {
+    .checks {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem 2rem;
+    }
+  }
+  .checks li {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    gap: 0.75rem;
+  }
+  .checks svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0.25rem;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--ok) 16%, transparent);
+    color: var(--ok);
+  }
+  .checks h3 {
+    font-size: var(--step-0);
+    margin-bottom: 0.2rem;
+  }
+  .checks p {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .fine {
+    margin-top: 2rem;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    max-width: 36rem;
+  }
+
+  .ticket-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  /* Papel térmico con borde dentado arriba y abajo */
+  .ticket {
+    --tooth: 8px;
+    width: min(100%, 21rem);
+    padding: 2rem 1.4rem;
+    background: var(--receipt);
+    color: #1d2733;
+    font-size: 0.8rem;
+    line-height: 1.55;
+    transform: rotate(1.5deg);
+    filter: drop-shadow(0 20px 30px rgb(16 38 63 / 0.18));
+    -webkit-mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / calc(var(--tooth) * 2)
+        51% repeat-x,
+      conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / calc(var(--tooth) * 2) 51%
+        repeat-x;
+    mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / calc(var(--tooth) * 2)
+        51% repeat-x,
+      conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / calc(var(--tooth) * 2) 51%
+        repeat-x;
+  }
+  .ticket p {
+    margin: 0;
+  }
+  .ticket hr {
+    border: 0;
+    border-top: 1px dashed #9aa6b2;
+    margin: 0.7rem 0;
+  }
+  .center {
+    text-align: center;
+  }
+  .strong {
+    font-weight: 600;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .total {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .okmark {
+    color: #1f8a5b;
+    font-weight: 600;
+  }
+  .legal {
+    font-size: 0.72rem;
+    color: #55616e;
+  }
+
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 4rem;
+    }
+    .ticket-wrap {
+      padding-top: 1rem;
+    }
+  }
+</style>

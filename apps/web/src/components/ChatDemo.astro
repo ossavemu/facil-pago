@@ -1,0 +1,387 @@
+---
+// Conversación de ejemplo en la línea de VENTAS: audio → confirmación numerada → soporte → comprobante.
+const items = [
+  { name: 'Coca-Cola 400 ml', qty: 2, price: 6000 },
+  { name: 'Pan tajado Bimbo 600 g', qty: 1, price: 7900 },
+  { name: 'Leche Alquería 1,1 L', qty: 1, price: 4800 },
+];
+const total = items.reduce((s, i) => s + i.price, 0);
+const cop = (n: number) => '$' + n.toLocaleString('es-CO');
+---
+
+<figure class="phone" aria-label="Ejemplo de una venta por WhatsApp">
+  <div class="screen">
+    <div class="topbar">
+      <span class="avatar" aria-hidden="true">FP</span>
+      <span class="who">
+        <strong>Ventas · Tienda Doña Rosa</strong>
+        <small>Fácil Pago</small>
+      </span>
+      <button type="button" class="replay" data-replay aria-label="Repetir la conversación">
+        <svg viewBox="0 0 24 24" aria-hidden="true"
+          ><path
+            d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path></svg
+        >
+      </button>
+    </div>
+
+    <ol class="chat" data-chat>
+      <li class="msg out" style="--d: 0.2s">
+        <div class="voice" aria-hidden="true">
+          <span class="play"></span>
+          <span class="wave">
+            {Array.from({ length: 26 }, (_, i) => <i style={`--h:${30 + ((i * 37) % 70)}%`} />)}
+          </span>
+          <span class="dur num">0:06</span>
+        </div>
+        <p class="transcript">«Dos Coca-Cola de 400, un pan tajado y una leche Alquería»</p>
+        <span class="time">10:41</span>
+      </li>
+
+      <li class="msg in" style="--d: 1.3s">
+        <p>Entendí esta venta:</p>
+        <table class="lines">
+          <tbody>
+            {
+              items.map((i) => (
+                <tr>
+                  <td class="num qty">{i.qty}×</td>
+                  <td>{i.name}</td>
+                  <td class="num amt">{cop(i.price)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td>Total</td>
+              <td class="num amt">{cop(total)}</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="opts"><b>1</b> Confirmar &nbsp;·&nbsp; <b>2</b> Corregir</p>
+        <span class="time">10:41</span>
+      </li>
+
+      <li class="msg out short" style="--d: 2.6s">
+        <p>1</p>
+        <span class="time">10:42 <span class="ticks" aria-hidden="true">✓✓</span></span>
+      </li>
+
+      <li class="msg out photo" style="--d: 3.4s">
+        <div class="shot" aria-hidden="true">
+          <span class="shot-label">Transferencia exitosa</span>
+          <span class="shot-amt num">{cop(total)}</span>
+          <span class="shot-ref num">Ref. M48210937</span>
+        </div>
+        <span class="time">10:42</span>
+      </li>
+
+      <li class="msg in" style="--d: 4.6s">
+        <p>
+          <span class="ok">✓ Soporte guardado.</span> Nequi por <span class="num">{cop(total)}</span>,
+          coincide con la venta.
+        </p>
+        <a class="pdf" href="#comprobante" tabindex="-1">
+          <span class="pdf-ico" aria-hidden="true">PDF</span>
+          <span>
+            <strong class="num">Comprobante V-000184</strong>
+            <small>1 página · 38 kB</small>
+          </span>
+        </a>
+        <span class="time">10:42</span>
+      </li>
+    </ol>
+  </div>
+</figure>
+
+<script>
+  // Reinicia la animación de entrada de los mensajes.
+  document.querySelectorAll<HTMLButtonElement>('[data-replay]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const chat = btn.closest('.phone')?.querySelector<HTMLElement>('[data-chat]');
+      if (!chat) return;
+      chat.classList.remove('play');
+      void chat.offsetWidth;
+      chat.classList.add('play');
+    });
+  });
+</script>
+
+<style>
+  .phone {
+    margin: 0;
+    width: min(100%, 22.5rem);
+    padding: 0.6rem;
+    border-radius: 2.6rem;
+    background: #0d1a28;
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--ink) 18%, transparent),
+      0 40px 80px -30px rgb(16 38 63 / 0.45),
+      0 18px 30px -18px rgb(16 38 63 / 0.35);
+  }
+  .screen {
+    border-radius: 2.1rem;
+    overflow: hidden;
+    background: var(--chat-bg);
+    color: #10263f;
+    display: flex;
+    flex-direction: column;
+    min-height: 37rem;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 1.4rem 1rem 0.75rem;
+    background: #10263f;
+    color: #fff;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: var(--tag);
+    color: var(--tag-ink);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.8rem;
+  }
+  .who {
+    display: grid;
+    line-height: 1.2;
+    margin-right: auto;
+    min-width: 0;
+  }
+  .who strong {
+    font-size: 0.88rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .who small {
+    font-size: 0.72rem;
+    opacity: 0.7;
+  }
+  .replay {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+    cursor: pointer;
+  }
+  .replay svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .chat {
+    list-style: none;
+    margin: 0;
+    padding: 0.9rem 0.7rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .msg {
+    position: relative;
+    max-width: 86%;
+    padding: 0.5rem 0.65rem 1.15rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 1px 0.5px rgb(0 0 0 / 0.12);
+    animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+    animation-delay: var(--d);
+  }
+  .chat.play .msg {
+    animation-name: pop-again;
+  }
+  .msg.in {
+    align-self: flex-start;
+    background: var(--chat-in);
+    color: var(--ink);
+    border-top-left-radius: 0.2rem;
+  }
+  .msg.out {
+    align-self: flex-end;
+    background: var(--chat-out);
+    color: var(--ink);
+    border-top-right-radius: 0.2rem;
+  }
+  .msg.short {
+    min-width: 4.5rem;
+  }
+  .time {
+    position: absolute;
+    right: 0.55rem;
+    bottom: 0.25rem;
+    font-size: 0.64rem;
+    color: var(--ink-mute);
+  }
+  .ticks {
+    color: #34b7f1;
+    letter-spacing: -0.2em;
+  }
+
+  .voice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 13.5rem;
+    max-width: 100%;
+  }
+  .play {
+    flex: none;
+    width: 0;
+    height: 0;
+    border-left: 0.6rem solid var(--ink-soft);
+    border-top: 0.38rem solid transparent;
+    border-bottom: 0.38rem solid transparent;
+  }
+  .wave {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 1.4rem;
+  }
+  .wave i {
+    flex: 1;
+    height: var(--h);
+    background: var(--ink-mute);
+    border-radius: 2px;
+  }
+  .dur {
+    font-size: 0.68rem;
+    color: var(--ink-mute);
+  }
+  .transcript {
+    margin-top: 0.35rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+  }
+
+  .lines {
+    width: 100%;
+    margin: 0.35rem 0;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+  .lines td {
+    padding: 0.12rem 0;
+    vertical-align: top;
+  }
+  .lines .qty {
+    width: 1.8rem;
+    color: var(--ink-mute);
+  }
+  .lines .amt {
+    text-align: right;
+    padding-left: 0.6rem;
+    white-space: nowrap;
+  }
+  .lines tfoot td {
+    padding-top: 0.3rem;
+    border-top: 1px dashed var(--line);
+    font-weight: 700;
+  }
+  .opts b {
+    display: inline-grid;
+    place-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 4px;
+    background: var(--tag);
+    color: var(--tag-ink);
+    font-size: 0.72rem;
+  }
+
+  .photo {
+    padding: 0.25rem 0.25rem 1.15rem;
+  }
+  .shot {
+    display: grid;
+    gap: 0.1rem;
+    width: 11rem;
+    padding: 0.9rem 0.8rem;
+    border-radius: 0.6rem;
+    background:
+      linear-gradient(160deg, rgb(255 255 255 / 0.12), transparent 60%),
+      #3a2f6b;
+    color: #fff;
+  }
+  .shot-label {
+    font-size: 0.68rem;
+    opacity: 0.8;
+  }
+  .shot-amt {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .shot-ref {
+    font-size: 0.64rem;
+    opacity: 0.7;
+  }
+
+  .ok {
+    color: var(--ok);
+    font-weight: 700;
+  }
+  .pdf {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.45rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 0.5rem;
+    background: color-mix(in oklab, var(--ink) 6%, transparent);
+    text-decoration: none;
+    color: inherit;
+  }
+  .pdf-ico {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2.4rem;
+    border-radius: 0.25rem;
+    background: var(--bad);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+  }
+  .pdf strong {
+    display: block;
+    font-size: 0.76rem;
+  }
+  .pdf small {
+    font-size: 0.66rem;
+    color: var(--ink-mute);
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
+  @keyframes pop-again {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
+</style>

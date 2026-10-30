@@ -1,0 +1,168 @@
+---
+import { SITE } from '../config';
+
+const rubros = ['Tienda de barrio', 'Minimercado', 'Droguería', 'Papelería', 'Ferretería', 'Otro'];
+---
+
+<section class="section pilot" id="piloto">
+  <div class="wrap grid">
+    <div class="section-head">
+      <p class="eyebrow">Piloto de 30 días</p>
+      <h2>Buscamos las primeras tiendas.</h2>
+      <p class="lede">
+        Te acompañamos a cargar tu catálogo, configurar las dos líneas y vender con Fácil Pago durante un mes. A cambio, nos
+        cuentas qué funciona y qué no.
+      </p>
+    </div>
+
+    <form class="form" data-pilot-form data-wa={SITE.whatsappSoporte} novalidate>
+      <div class="field">
+        <label for="pilot-nombre">Tu nombre</label>
+        <input id="pilot-nombre" name="nombre" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="pilot-tienda">Nombre de la tienda</label>
+        <input id="pilot-tienda" name="tienda" autocomplete="organization" required />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="pilot-ciudad">Barrio y ciudad</label>
+          <input id="pilot-ciudad" name="ciudad" placeholder="Ej.: Niquía, Bello" required />
+        </div>
+        <div class="field">
+          <label for="pilot-rubro">Tipo de negocio</label>
+          <select id="pilot-rubro" name="rubro">
+            {rubros.map((r) => <option>{r}</option>)}
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" aria-hidden="true"
+          ><path
+            d="M4 20l1.3-3.9A8 8 0 1 1 8 18.8L4 20z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linejoin="round"></path></svg
+        >
+        Escribirnos por WhatsApp
+      </button>
+      <p class="hint" data-hint aria-live="polite">
+        Se abrirá WhatsApp con tus datos en un mensaje. Tú decides si lo envías.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-pilot-form]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const hint = form.querySelector<HTMLElement>('[data-hint]');
+    const missing = [...form.querySelectorAll<HTMLInputElement>('input[required]')].find((i) => !i.value.trim());
+    if (missing) {
+      missing.focus();
+      if (hint) hint.textContent = `Falta llenar «${missing.labels?.[0]?.textContent ?? 'este campo'}».`;
+      return;
+    }
+    const d = new FormData(form);
+    const text = [
+      'Hola, quiero postular mi tienda al piloto de Fácil Pago.',
+      `Nombre: ${d.get('nombre')}`,
+      `Tienda: ${d.get('tienda')}`,
+      `Ubicación: ${d.get('ciudad')}`,
+      `Tipo de negocio: ${d.get('rubro')}`,
+    ].join('\n');
+    if (hint) hint.textContent = 'Se abrirá WhatsApp con tus datos en un mensaje. Tú decides si lo envías.';
+    window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .pilot {
+    background: var(--tag);
+    color: var(--tag-ink);
+    --ink: #10263f;
+    --ink-soft: #2b4058;
+    --ink-mute: #4a5b6d;
+  }
+  .pilot .eyebrow {
+    color: var(--ink-mute);
+  }
+  .grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  .grid .section-head {
+    margin-bottom: 0;
+  }
+  .form {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    border-radius: 1.25rem;
+    background: #fffdf6;
+    color: #10263f;
+    box-shadow: 0 30px 60px -30px rgb(16 38 63 / 0.4);
+    min-width: 0;
+  }
+  .row {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 36rem) {
+    .row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .field {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  input,
+  select {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0 0.9rem;
+    border-radius: 0.6rem;
+    border: 1.5px solid #c9d2db;
+    background: #fff;
+    color: #10263f;
+    font: inherit;
+    color-scheme: light;
+  }
+  input::placeholder {
+    color: #8a97a5;
+  }
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: #10263f;
+    box-shadow: 0 0 0 3px rgb(16 38 63 / 0.15);
+  }
+  .form .btn {
+    margin-top: 0.5rem;
+    background: #10263f;
+    color: #fff;
+  }
+  .form .btn:hover {
+    background: #1b3655;
+  }
+  .hint {
+    font-size: 0.8rem;
+    color: #4a5b6d;
+    text-align: center;
+  }
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+</style>

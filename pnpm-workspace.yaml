@@ -1,0 +1,21 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Defensa contra ataques a la cadena de suministro
+# No instalar versiones publicadas hace menos de 3 días (en minutos)
+minimumReleaseAge: 4320
+# Fallar si una versión nueva baja su nivel de confianza (p. ej. pierde provenance)
+trustPolicy: no-downgrade
+# Excepciones revisadas a mano y aprobadas (2026-10-30):
+# @vercel/functions dejó de adjuntar atestación de provenance desde 3.8, pero sigue
+# publicando por trusted publishing con la misma configuración OIDC de GitHub.
+trustPolicyExclude:
+  - '@vercel/functions'
+# Prohibir dependencias transitivas desde git o tarballs sueltos
+blockExoticSubdeps: true
+# Ningún paquete ejecuta scripts de instalación salvo los aprobados aquí
+strictDepBuilds: true
+allowBuilds:
+  esbuild: true
+  sharp: true

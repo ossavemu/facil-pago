@@ -1,0 +1,76 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '#como-funciona', label: 'Cómo funciona' },
+  { href: '#soportes', label: 'Soportes de pago' },
+  { href: '#portal', label: 'Portal' },
+  { href: '#precio', label: 'Precio' },
+  { href: '#preguntas', label: 'Preguntas' },
+];
+---
+
+<header class="header">
+  <div class="wrap bar">
+    <a href="/" class="brand" aria-label="Fácil Pago, inicio">
+      <Logo />
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <a href="#piloto" class="btn btn-primary cta">Quiero ser piloto</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: color-mix(in oklab, var(--paper) 86%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 4.25rem;
+  }
+  .brand {
+    text-decoration: none;
+    margin-right: auto;
+  }
+  nav {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  nav a:hover {
+    color: var(--ink);
+  }
+  .cta {
+    min-height: 2.6rem;
+    padding: 0 1.1rem;
+    font-size: 0.92rem;
+  }
+  @media (min-width: 60rem) {
+    nav {
+      display: block;
+    }
+  }
+</style>

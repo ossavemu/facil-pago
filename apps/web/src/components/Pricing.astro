@@ -1,0 +1,117 @@
+---
+const included = [
+  'Línea de INVENTARIO y línea de VENTAS',
+  'Registro por foto, audio o texto',
+  'Soportes de pago guardados con cada venta',
+  'Comprobantes simples numerados en PDF',
+  'Portal web con alertas y bandeja por revisar',
+  'Carga inicial del catálogo desde Excel',
+  'Ayuda por la línea de soporte',
+];
+---
+
+<section class="section pricing" id="precio">
+  <div class="wrap grid">
+    <div class="section-head">
+      <p class="eyebrow">Precio</p>
+      <h2>Menos de lo que cuesta un lector de códigos.</h2>
+      <p class="lede">
+        Una sola tarifa por tienda. Tú pones los celulares y las SIM; nosotros ponemos el resto.
+      </p>
+    </div>
+
+    <article class="card">
+      <div class="price">
+        <span class="sign">$</span>
+        <span class="amount num">50.000</span>
+        <span class="per">COP<br />al mes</span>
+      </div>
+      <p class="sub">Por tienda · precio de lanzamiento</p>
+      <ul>
+        {included.map((i) => <li>{i}</li>)}
+      </ul>
+      <a href="#piloto" class="btn btn-primary">Postular mi tienda al piloto</a>
+      <p class="fine">El comprobante simple no reemplaza la factura electrónica de la DIAN.</p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .grid .section-head {
+    margin-bottom: 0;
+  }
+  .card {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: 1.25rem;
+    background: var(--paper-raised);
+    border: 2px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--tag);
+  }
+  .price {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    line-height: 0.9;
+  }
+  .sign {
+    font-size: var(--step-2);
+    font-weight: 700;
+    padding-top: 0.3rem;
+  }
+  .amount {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+  .per {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink-mute);
+    line-height: 1.2;
+    padding-top: 0.45rem;
+  }
+  .sub {
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    margin-top: -0.5rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 0.6rem;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 1.1rem 1fr;
+    gap: 0.6rem;
+  }
+  li::before {
+    content: '✓';
+    color: var(--ok);
+    font-weight: 700;
+  }
+  .fine {
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+    text-align: center;
+  }
+  @media (min-width: 60rem) {
+    .grid {
+      grid-template-columns: 1fr 26rem;
+      gap: 5rem;
+    }
+  }
+</style>

@@ -1,0 +1,76 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap inner">
+    <div class="brand">
+      <Logo />
+      <p>Inventario, ventas y comprobantes por WhatsApp para tiendas de Colombia.</p>
+    </div>
+    <ul class="links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#precio">Precio</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href={SITE.repo} rel="noopener" target="_blank">Código fuente</a></li>
+    </ul>
+    <p class="legal">
+      © {year} {SITE.name}. Software libre bajo licencia AGPL-3.0. WhatsApp es una marca de su respectivo dueño; Fácil Pago no
+      está afiliado a Meta.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: 3rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+  }
+  .inner {
+    display: grid;
+    gap: 2rem;
+  }
+  .brand {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 22rem;
+  }
+  .brand p {
+    color: var(--ink-mute);
+    font-size: var(--step--1);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .links a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .links a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal {
+    grid-column: 1 / -1;
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 48rem) {
+    .inner {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+// Marca: un recibo con un chulo, en el amarillo del cartel de precio.
+---
+
+<span class="logo">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
+    <rect width="64" height="64" rx="14" class="bg"></rect>
+    <path d="M18 14h28v36l-4.7-3-4.6 3-4.7-3-4.7 3-4.6-3-4.7 3z" class="paper"></path>
+    <path
+      d="m24 31 5.5 5.5L41 25"
+      fill="none"
+      class="check"
+      stroke-width="5"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+  <span class="word">Fácil Pago</span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  .bg {
+    fill: var(--ink);
+  }
+  .paper {
+    fill: var(--tag);
+  }
+  .check {
+    stroke: var(--tag-ink);
+  }
+  .word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+</style>
