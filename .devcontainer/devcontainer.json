@@ -1,6 +1,11 @@
 {
   "name": "Fácil Pago",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
   "postCreateCommand": "npm i -g pnpm@12.16.1 opencode-ai && pnpm install",
   "forwardPorts": [4321],
   "portsAttributes": {
