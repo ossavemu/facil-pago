@@ -1,13 +1,7 @@
 {
   "name": "Fácil Pago",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "24"
-    },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
-  },
-  "postCreateCommand": "corepack enable && npm i -g pnpm@12.16.1 opencode-ai && pnpm install",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "postCreateCommand": "npm i -g pnpm@12.16.1 opencode-ai && pnpm install",
   "forwardPorts": [4321],
   "portsAttributes": {
     "4321": {
